@@ -8,6 +8,9 @@ The purpose of the investigation was to generate PowerShell activity on a Window
 
 This project demonstrates my investigation workflow rather than simply identifying PowerShell execution.
 
+## Investigation Map
+
+![Microsoft Defender XDR Investigation Map](image5.png)
 ---
 
 ## Lab Resources
@@ -102,17 +105,34 @@ The account, endpoint, process chain, and command execution were consistent with
 PowerShell was not classified as suspicious simply because it executed. The verdict was reached after correlating the user, parent and child processes, command context, and available network telemetry.
 
 ---
-
 ## Investigation Evidence
 
-The investigation included screenshots documenting:
+### 1. Initial PowerShell Hunt
 
-1. Initial PowerShell hunt
-2. User and parent process identification
-3. Child process pivot
-4. Network activity check
+I used Advanced Hunting to identify PowerShell activity on the lab endpoint.
 
-Screenshots will be stored in the `/screenshots` directory.
+![Initial PowerShell Hunt](image1.png)
+
+### 2. User and Parent Process
+
+The investigation identified `ronapadmin` as the user and confirmed that `explorer.exe` launched `powershell.exe`.
+
+![User and Parent Process](image2.png)
+
+### 3. Child Process Pivot
+
+I pivoted from PowerShell to its child processes and confirmed that `whoami.exe` was executed.
+
+![Child Process Pivot](image3.png)
+
+### 4. Network Pivot
+
+I checked `DeviceNetworkEvents` for PowerShell-related network activity. No related network activity was identified.
+
+![Network Pivot](image4.png)
+
+---
+
 
 ---
 
